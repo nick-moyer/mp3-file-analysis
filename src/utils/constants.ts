@@ -9,7 +9,7 @@
 // Note: Index 0 is 'free', Index 15 is 'reserved/bad'
 export const BITRATES = [
   0,        // 0000 (Free)
-  32000,    // 0001 (32 kbps)
+  32000,    // 0001
   40000,    // 0010
   48000,    // 0011
   56000,    // 0100
@@ -17,12 +17,12 @@ export const BITRATES = [
   80000,    // 0110
   96000,    // 0111
   112000,   // 1000
-  128000,   // 1001 (128 kbps - Common)
+  128000,   // 1001
   160000,   // 1010
-  192000,   // 1011 (192 kbps - Common)
+  192000,   // 1011
   224000,   // 1100
   256000,   // 1101
-  320000,   // 1110 (320 kbps - Max)
+  320000,   // 1110
   0         // 1111 (Bad)
 ] as const;
 
@@ -30,9 +30,9 @@ export const BITRATES = [
 // Index = The 2-bit sample rate value (bits 18-19)
 // Value = Frequency in Hz
 export const SAMPLE_RATES = [
-  44100, // 00 (44.1 kHz - CD Quality)
-  48000, // 01 (48 kHz)
-  32000, // 10 (32 kHz)
+  44100, // 00
+  48000, // 01
+  32000, // 10
   0      // 11 (Reserved)
 ] as const;
 

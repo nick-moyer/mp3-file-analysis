@@ -58,8 +58,6 @@ describe('MP3 Analysis Endpoint', async () => {
     assert.strictEqual(response.statusCode, 200);
 
     const body = JSON.parse(response.body);
-    assert.ok(body.frameCount !== undefined, 'Response should have frameCount');
-    assert.strictEqual(typeof body.frameCount, 'number');
-    assert.ok(body.frameCount > 0, 'Frame count should be positive');
+    assert.strictEqual(body.frameCount, 6090); // Expected frame count for sample.mp3 (https://checkmate.gissen.nl/)
   });
 });
