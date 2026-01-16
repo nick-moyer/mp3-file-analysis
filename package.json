@@ -30,6 +30,7 @@
     "c8": "^10.1.2",
     "concurrently": "^9.0.0",
     "fastify-tsconfig": "^3.0.0",
+    "form-data": "^4.0.5",
     "ts-node": "^10.4.0",
     "typescript": "~5.9.2"
   }

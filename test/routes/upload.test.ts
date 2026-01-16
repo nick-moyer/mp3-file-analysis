@@ -1,16 +1,17 @@
-import multipart from '@fastify/multipart';
 import Fastify from 'fastify';
 import fs from 'fs';
 import assert from 'node:assert';
 import { after, describe, test } from 'node:test';
 import path from 'path';
+import FormData from 'form-data'; // 👈 Required for testing uploads
 import { app } from '../../src/app';
 
 // Paths
-const SAMPLE_MP3_PATH = path.join(__dirname, '../../sample.mp3');
-const BAD_FILE_PATH = path.join(__dirname, '../../bad_sample.txt');
+const SAMPLE_MP3_PATH = path.join(__dirname, '../../data/sample.mp3');
+const BAD_FILE_PATH = path.join(__dirname, '../../data/bad_sample.txt');
 
 describe('MP3 Analysis Endpoint', async () => {
+  const url = '/file-upload';
   // Create a bad file for testing
   fs.writeFileSync(BAD_FILE_PATH, 'This is text, not audio.');
 
@@ -23,17 +24,22 @@ describe('MP3 Analysis Endpoint', async () => {
 
   test('POST /file-upload should return 400 if no file is uploaded', async (t) => {
     const fastify = Fastify();
-    fastify.register(multipart);
     fastify.register(app);
+
+    const form = new FormData();
 
     const response = await fastify.inject({
       method: 'POST',
-      url: '/file-upload',
+      url,
+      payload: form,
+      headers: form.getHeaders()
     });
 
     assert.strictEqual(response.statusCode, 400);
     const body = JSON.parse(response.body);
-    assert.ok(body.error, 'Response should contain an error message');
+
+    assert.strictEqual(body.error, 'Bad Request');
+    assert.strictEqual(body.message, 'No file uploaded');
   });
 
   test('POST /file-upload should count frames for valid MP3', async (t) => {
@@ -43,16 +49,16 @@ describe('MP3 Analysis Endpoint', async () => {
     }
 
     const fastify = Fastify();
-    fastify.register(multipart);
     fastify.register(app);
+
+    const form = new FormData();
+    form.append('file', fs.createReadStream(SAMPLE_MP3_PATH));
 
     const response = await fastify.inject({
       method: 'POST',
-      url: '/file-upload',
-      headers: { 'content-type': 'multipart/form-data' },
-      payload: {
-        file: fs.createReadStream(SAMPLE_MP3_PATH),
-      },
+      url,
+      payload: form,
+      headers: form.getHeaders()
     });
 
     assert.strictEqual(response.statusCode, 200);
