@@ -8,22 +8,22 @@
 // Value = Bitrate in BITS PER SECOND (bps)
 // Note: Index 0 is 'free', Index 15 is 'reserved/bad'
 export const BITRATES = [
-  0,        // 0000 (Free)
-  32000,    // 0001
-  40000,    // 0010
-  48000,    // 0011
-  56000,    // 0100
-  64000,    // 0101
-  80000,    // 0110
-  96000,    // 0111
-  112000,   // 1000
-  128000,   // 1001
-  160000,   // 1010
-  192000,   // 1011
-  224000,   // 1100
-  256000,   // 1101
-  320000,   // 1110
-  0         // 1111 (Bad)
+  0, // 0000 (Free)
+  32000, // 0001
+  40000, // 0010
+  48000, // 0011
+  56000, // 0100
+  64000, // 0101
+  80000, // 0110
+  96000, // 0111
+  112000, // 1000
+  128000, // 1001
+  160000, // 1010
+  192000, // 1011
+  224000, // 1100
+  256000, // 1101
+  320000, // 1110
+  0, // 1111 (Bad)
 ] as const;
 
 // Sample Rates Lookup Table (MPEG-1)
@@ -33,7 +33,7 @@ export const SAMPLE_RATES = [
   44100, // 00
   48000, // 01
   32000, // 10
-  0      // 11 (Reserved)
+  0, // 11 (Reserved)
 ] as const;
 
 // Used to verify we are looking at the correct file format
@@ -41,13 +41,13 @@ export const SAMPLE_RATES = [
 export enum MpegVersion {
   MPEG2_5 = 0, // 00
   Reserved = 1, // 01
-  MPEG2 = 2,    // 10
-  MPEG1 = 3     // 11
+  MPEG2 = 2, // 10
+  MPEG1 = 3, // 11
 }
 
 export enum MpegLayer {
   Reserved = 0, // 00
   LayerIII = 1, // 01
-  LayerII = 2,  // 10
-  LayerI = 3    // 11
+  LayerII = 2, // 10
+  LayerI = 3, // 11
 }

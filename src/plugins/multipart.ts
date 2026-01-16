@@ -7,9 +7,9 @@ import multipart, { FastifyMultipartOptions } from '@fastify/multipart';
  * @see https://github.com/fastify/fastify-multipart
  */
 export default fp<FastifyMultipartOptions>(async (fastify) => {
-    fastify.register(multipart, {
-        limits: {
-            fileSize: 50 * 1024 * 1024, // 50MB limit (Scalability)
-        },
-    });
+  fastify.register(multipart, {
+    limits: {
+      fileSize: 50 * 1024 * 1024, // 50MB limit (Scalability)
+    },
+  });
 });

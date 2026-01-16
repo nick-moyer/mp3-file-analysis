@@ -22,7 +22,7 @@ describe('MP3 Analysis Endpoint', async () => {
     }
   });
 
-  test('POST /file-upload should return 400 if no file is uploaded', async (t) => {
+  test('POST /file-upload should return 400 if no file is uploaded', async (_t) => {
     const fastify = Fastify();
     fastify.register(app);
 
@@ -32,7 +32,7 @@ describe('MP3 Analysis Endpoint', async () => {
       method: 'POST',
       url,
       payload: form,
-      headers: form.getHeaders()
+      headers: form.getHeaders(),
     });
 
     assert.strictEqual(response.statusCode, 400);
@@ -58,7 +58,7 @@ describe('MP3 Analysis Endpoint', async () => {
       method: 'POST',
       url,
       payload: form,
-      headers: form.getHeaders()
+      headers: form.getHeaders(),
     });
 
     assert.strictEqual(response.statusCode, 200);

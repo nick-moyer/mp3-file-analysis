@@ -12,29 +12,29 @@ const uploadOpts: RouteShorthandOptions = {
     body: {
       type: 'object',
       properties: {
-        file: { type: 'string', format: 'binary' }
-      }
+        file: { type: 'string', format: 'binary' },
+      },
     },
     response: {
       200: {
         type: 'object',
         properties: {
-          frameCount: { type: 'number' }
-        }
+          frameCount: { type: 'number' },
+        },
       },
       '4xx': {
         type: 'object',
         properties: {
           statusCode: { type: 'number' },
           error: { type: 'string' },
-          message: { type: 'string' }
-        }
-      }
-    }
+          message: { type: 'string' },
+        },
+      },
+    },
   },
   validatorCompiler: () => {
     return () => true;
-  }
+  },
 };
 
 const uploadRoutes: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
@@ -72,9 +72,11 @@ const uploadRoutes: FastifyPluginAsync = async (fastify, _opts): Promise<void> =
       try {
         // Cleanup
         await fs.promises.unlink(tempFilePath);
-      } catch (ignore) { }
+      } catch {
+        // Ignore cleanup errors
+      }
     }
   });
-}
+};
 
 export default uploadRoutes;
