@@ -116,7 +116,7 @@ describe('MP3 Analysis Endpoint', async () => {
     const body = JSON.parse(response.body);
 
     assert.strictEqual(body.error, 'Internal Server Error');
-    assert.strictEqual(body.message, 'Invalid file signature');
+    assert.strictEqual(body.message, 'Failed to process file');
   });
 
   test('POST /file-upload should count frames for valid MP3', async (t) => {

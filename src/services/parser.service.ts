@@ -26,8 +26,6 @@ export async function countMp3Frames(filePath: string): Promise<number> {
 
     const signature = buffer.toString('utf8', 0, 3);
 
-    console.log(signature);
-
     if (signature !== 'ID3') {
       throw new Error('Invalid file signature');
     }
