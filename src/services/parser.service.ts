@@ -24,21 +24,27 @@ export async function countMp3Frames(filePath: string): Promise<number> {
     // Buffer: ['I']['D']['3'][?]
     await fileHandle.read(buffer, 0, 3, 0);
 
-    if (buffer.toString('utf8', 0, 3) === 'ID3') {
-      // ID3 header is 10 bytes
-      const headerBuf = Buffer.alloc(10);
+    const signature = buffer.toString('utf8', 0, 3);
 
-      // Buffer: ['I']['D']['3'][ver][rev][flags][size1][size2][size3][size4]
-      await fileHandle.read(headerBuf, 0, 10, 0);
+    console.log(signature);
 
-      // ID3 size is encoded as "Synchsafe integers" (7 bits per byte)
-      // We combine bytes 6-9 to get the total tag size
-      const tagSize =
-        (headerBuf[6] << 21) | (headerBuf[7] << 14) | (headerBuf[8] << 7) | headerBuf[9];
-
-      // Jump past the metadata + 10 byte header
-      offset = tagSize + 10;
+    if (signature !== 'ID3') {
+      throw new Error('Invalid file signature');
     }
+
+    // ID3 header is 10 bytes
+    const headerBuf = Buffer.alloc(10);
+
+    // Buffer: ['I']['D']['3'][ver][rev][flags][size1][size2][size3][size4]
+    await fileHandle.read(headerBuf, 0, 10, 0);
+
+    // ID3 size is encoded as "Synchsafe integers" (7 bits per byte)
+    // We combine bytes 6-9 to get the total tag size
+    const tagSize =
+      (headerBuf[6] << 21) | (headerBuf[7] << 14) | (headerBuf[8] << 7) | headerBuf[9];
+
+    // Jump past the metadata + 10 byte header
+    offset = tagSize + 10;
 
     // Main loop to read through the file
     while (offset < stats.size - 4) {
