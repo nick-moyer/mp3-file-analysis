@@ -1,24 +1,27 @@
 {
   "name": "mp3-file-analysis",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with Fastify-CLI.",
+  "description": "A high-performance Fastify API that returns frame counts of MP3 file uploads.",
   "main": "app.ts",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "npm run build:ts && tsc -p test/tsconfig.json && c8 node --test -r ts-node/register \"test/**/*.ts\"",
-    "start": "npm run build:ts && fastify start -l info dist/app.js",
     "build:ts": "tsc",
-    "watch:ts": "tsc -w",
     "dev": "npm run build:ts && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"npm:watch:ts\" \"npm:dev:start\"",
     "dev:start": "fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js",
+    "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
     "lint": "eslint 'src/**/*.ts' 'test/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' 'test/**/*.ts' --fix",
-    "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
+    "start": "npm run build:ts && fastify start -l info dist/app.js",
+    "test": "npm run build:ts && tsc -p test/tsconfig.json && c8 node --test -r ts-node/register \"test/**/*.ts\"",
+    "watch:ts": "tsc -w"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nick Moyer",
   "license": "ISC",
   "dependencies": {
     "@fastify/autoload": "^6.0.0",
